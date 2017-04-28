@@ -1,3 +1,4 @@
+
 $! Initially we do a series of 9 commands like the one below.. The important bit in this is the --range flag 
 $! followed by a start and end byte position. This tells CURL to only download the specified bytes between 
 $! the start and end offset position. In this case we start at the beginning of the file - position 0 - and 
@@ -59,6 +60,4 @@ $!
 $ else
 $     goto start
 $ endif
-```
-the code
-```
+
