@@ -9,5 +9,5 @@ The Capital IQ model of data provision is that on their FTP site - once per week
 
 This means that we could kick off several processes at the same time, each downloading a different section of the data, then re-combine them at the end to reconstitute the original data file. The operating system I use is OpenVMS and it's equivalent to a DOS batch file or shell script file in UNIX is called a DCL command file. So although you might not have seen this type of file before you should be able to follow it reasonably easily
 
-NB The ability to do this with Curl is only available with later versions of it. The version I use is 7.19.5 for OpenVMS 8.4 (IA64-HP-VMS)
+<b>NB The ability to do this with Curl is only available with later versions of it. The version I use is 7.19.5 for OpenVMS 8.4 (IA64-HP-VMS)</b>
 
