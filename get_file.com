@@ -17,7 +17,7 @@ $! For the last CURL command above we simply say get everything else from byte p
 $! the file. At this stage we have two main tasks left. We need to recognise when all the background 
 $! CURL jobs have finished and then reconstitute the individual partN.zip files into the original file.
 $!
-$! After some trial and error I discovered that the unzip command <b>unzip -lb part*.zip</b> would result in the following 
+$! After some trial and error I discovered that the unzip command `unzip -lb part*.zip` would result in the following 
 $! 2 lines being returned when all the CURL commands had finished successfully.
 $!
 $!             9 files had no zipfile directory.
@@ -59,3 +59,6 @@ $!
 $ else
 $     goto start
 $ endif
+```
+the code
+```
