@@ -10,10 +10,10 @@ $! command in the sequence.
 $ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 0-1000000000 ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part1.zip -s -S &
 $ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 1000000001-20000000000 ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part2.zip -s -S &
 
-$! Etc …. Repeat a further 6 times increasing the range parameters as required  followed by the final command of :
+$! etc …. Repeat a further 6 times increasing the range parameters as required  followed by the final command of :
 
 $ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 8000000001- ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part9.zip -s -S &
-
+$!
 $! For the last CURL command above we simply say get everything else from byte position 80000000001 to the end of 
 $! the file. At this stage we have two main tasks left. We need to recognise when all the background 
 $! CURL jobs have finished and then reconstitute the individual partN.zip files into the original file.
@@ -53,9 +53,11 @@ $ then
 $    set file/attribute=(rfm=udf) part%.zip
 $    copy part1.zip,part2.zip,part3.zip,part4.zip,part5.zip,part6.zip,part7.zip,part8.zip,part9.zip bigfile.zip
 $    set file/attribute=(rfm=udf) bigfile.zip
+$! unzip2 is a version of ZIP for our openVMS system that can deal with huge files
 $    unzip2 -aob bigfile.zip
 $!
-$!  … and any further processing can go here or elsewhere
+$! At this stage the original files in the ZIP should be reconstituted and any further 
+$! processing on them can go here or elsewhere
 $!
 $ else
 $     goto start
