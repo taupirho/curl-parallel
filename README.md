@@ -1,5 +1,5 @@
 # curl-parallel
-Using CURL to parallel download large datafiles
+<h1>Using CURL to parallel download large datafiles</h1>
 
 Just documenting a method of using Curl to parallel download a large financial data file from an FTP site.
 
