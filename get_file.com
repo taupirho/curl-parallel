@@ -1,5 +1,5 @@
 
-$! A DCL file to download a large  (approx 9G Zipped ) file from a financila data provider
+$! A DCL file to download a large  (approx 9G Zipped ) file from an FTP site using Curl
 $! Initially we do a series of 9 commands like the one below to download 1 Gig a ta time.  
 $! The important bit in this is the --range flag followed by a start and end byte position. 
 $! This tells CURL to only download the specified bytes between the start and end offset position. 
