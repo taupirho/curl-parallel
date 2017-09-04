@@ -1,6 +1,6 @@
 
 $! A DCL file to download a large  (approx 9G Zipped ) file from an FTP site using Curl
-$! Initially we do a series of 9 commands like the one below to download 1 Gig a ta time.  
+$! Initially we do a series of 9 commands like the one below to download 1 Gig at a time.  
 $! The important bit in this is the --range flag followed by a start and end byte position. 
 $! This tells CURL to only download the specified bytes between the start and end offset position. 
 $! In this case we start at the beginning of the file - position 0 - and download 1 billion bytes of data - position 10000000000. 
@@ -8,19 +8,21 @@ $! We repeat this 9 times with the start position
 $! of the next command starting at 1 + the end position of the previous command. The ‘&’  at the end of 
 $! each command tell the operating system to do this command in the background and continue with the next 
 $! command in the sequence.
-$!
+$! NB
+$! We use a couple of extra utilities ported to DCL from other systems , namely unzip2 which can unzip very large files and 
+$! a port of the sed unix command to more easily do text manipluitaion oeprations. 
 $! Obviously the number of CURL commands and start/end byte positions you choose will depend on the size of file you are downloading.
 $!
 $! Run all comamnds below in the background in parallel 
 $!
 $ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 0-1000000000 ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part1.zip -s -S &
 $ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 1000000001-20000000000 ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part2.zip -s -S &
-$ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 2000000001-30000000000 ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part2.zip -s -S &
-$ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 3000000001-40000000000 ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part2.zip -s -S &
-$ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 4000000001-50000000000 ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part2.zip -s -S &
-$ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 5000000001-60000000000 ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part2.zip -s -S &
-$ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 6000000001-70000000000 ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part2.zip -s -S &
-$ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 7000000001-80000000000 ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part2.zip -s -S &
+$ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 2000000001-30000000000 ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part3.zip -s -S &
+$ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 3000000001-40000000000 ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part4.zip -s -S &
+$ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 4000000001-50000000000 ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part5.zip -s -S &
+$ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 5000000001-60000000000 ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part6.zip -s -S &
+$ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 6000000001-70000000000 ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part7.zip -s -S &
+$ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 7000000001-80000000000 ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part8.zip -s -S &
 $ pipe curl2 --insecure --user myusername:mypassword --disable-epsv --keepalive-time 5 --range 8000000001- ftp://edx.standardandpoors.com/Products/OwnershipDetailV2/Ownership.zip -o part9.zip -s -S &
 $!
 $! For the final CURL command above we simply get everything else from byte position 80000000001 to the end of 
@@ -72,5 +74,6 @@ $! At this stage the original files contained in the ZIP should be reconstituted
 $! processing on them can go here or elsewhere
 $!
 $ else
+$! the curl commands haven't ended yet so go back to the beginning of the loop and try again
 $     goto start
 $ endif
